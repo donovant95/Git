@@ -1,4 +1,3 @@
-
 public class LCA {
 	
 	Node root;
@@ -47,7 +46,7 @@ public class LCA {
 		}
 	}
 	
-	public Node lowestCommonAncestor(Node rootNode, Node node1, Node node2) 
+	public static Node lowestCommonAncestor(Node rootNode, Node node1, Node node2) 
 	{
 	    if(rootNode == null)
 	    {
@@ -72,10 +71,13 @@ public class LCA {
 	    {
 	        return null;
 	    }
+	    if(leftNode == null)
+	    {
+	        return rightNode;
+	    }
 	    else
 	    {
-	    	//what does this do?
-	        return leftNode == null ?rightNode:leftNode;
+	    	return leftNode;
 	    }
 	}
 
