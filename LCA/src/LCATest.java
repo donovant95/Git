@@ -2,7 +2,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class lowestCommonAncestorTest {
+public class LCATest {
 
 	
 	
@@ -10,7 +10,7 @@ public class lowestCommonAncestorTest {
 	public void testPrintTree()
 	{
 		//Testing printing of an empty tree.
-	     BST<Character, Character> bst = new BST<Character, Character>();
+	     LCA<Character, Character> bst = new LCA<Character, Character>();
 	     assertEquals("Testing printing of empty tree",
 	             "()", bst.printTree());
 	     
@@ -31,7 +31,7 @@ public class lowestCommonAncestorTest {
 	
 	@Test
 	public void testInsert() {
-		BST<Character, Character> bst = new BST<Character, Character>();
+		LCA<Character, Character> bst = new LCA<Character, Character>();
 		
 		
 		//Testing node creation.
@@ -75,7 +75,7 @@ public class lowestCommonAncestorTest {
 	
 	@Test
 	public void testGet(){
-		BST<Character, Character> bst = new BST<Character, Character>();
+		LCA<Character, Character> bst = new LCA<Character, Character>();
 		
 		assertNull("Testing get on empty tree", 
 				bst.get('A'));
@@ -98,7 +98,7 @@ public class lowestCommonAncestorTest {
 	
 	@Test
 	public void testDelete(){
-		BST<Integer, Integer> bst = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst = new LCA<Integer, Integer>();
 		
 		//Testing delete on an empty tree.
 		bst.delete(1);
@@ -149,7 +149,7 @@ public class lowestCommonAncestorTest {
 		//Lowest Common Ancestor should require two keys and return key of LCA. We then can use 
 		
 		
-		BST<Integer, Integer> bst = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst = new LCA<Integer, Integer>();
 		
 		//Testing empty tree.
 		assertNull("Testing LCA on empty tree", bst.lowestCommonAncestor(1, 2));
@@ -166,7 +166,7 @@ public class lowestCommonAncestorTest {
 		assertNull("Testing one node tree given non-present keys", bst.lowestCommonAncestor(2,3));
 		
 		//Testing multi-node tree
-		BST<Integer, Integer> bst2 = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst2 = new LCA<Integer, Integer>();
 
 	       	bst2.insert(7, 7);   //        _7_
 	        bst2.insert(8, 8);   //      /     \
@@ -189,7 +189,7 @@ public class lowestCommonAncestorTest {
 	
 	@Test
 	public void testIsEmpty(){
-		BST<Integer, Integer> bst = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst = new LCA<Integer, Integer>();
 		assertEquals("Testing empty tree", true, bst.isEmpty());
 		
 		bst.insert(1, 1);
@@ -198,7 +198,7 @@ public class lowestCommonAncestorTest {
 	
 	@Test
 	public void testSize(){
-		BST<Integer, Integer> bst = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst = new LCA<Integer, Integer>();
 		assertEquals("Testing empty tree", 0, bst.size());
 		
 		bst.insert(1, 1);
@@ -214,7 +214,7 @@ public class lowestCommonAncestorTest {
 
 	@Test
 	public void testContains(){
-		BST<Integer, Integer> bst = new BST<Integer, Integer>();
+		LCA<Integer, Integer> bst = new LCA<Integer, Integer>();
 		assertEquals("Testing empty tree", false, bst.contains(4));
 		
 		bst.insert(1, 1);

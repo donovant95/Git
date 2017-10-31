@@ -1,16 +1,15 @@
 import java.lang.StringBuilder;
 
-public class BST<Key extends Comparable<Key>, Value> {
-    private Node root;             // root of BST
-
-    /**
-     * Private node class.
-     */
+public class LCA<Key extends Comparable<Key>, Value> {
+    private Node root;
+    
     private class Node {
-        private Key key;           // sorted by key
-        private Value val;         // associated data
-        private Node left, right;  // left and right subtrees
-        private int N;             // number of nodes in subtree
+        private Key key;           
+        private Value val; 
+        //replace these with a list of nodes
+        private Node left;
+        private Node right;
+        private int N;
 
         public Node(Key key, Value val, int N) {
             this.key = key;
@@ -19,20 +18,25 @@ public class BST<Key extends Comparable<Key>, Value> {
         }
     }
     
+    public boolean isEmpty()
+    {
+    	return size() == 0;	
+    }
 
-//TODO Test below function.    
-    // is the symbol table empty?
-    public boolean isEmpty() { return size() == 0; }
-
+    public int size() 
+    {
+    	return size(root); 
+    }   
     
-//TODO Test below function.    
-    // return number of key-value pairs in BST
-    public int size() { return size(root); }   
-    
-    // return number of key-value pairs in BST rooted at x
     private int size(Node x) {
-        if (x == null) return 0;
-        else return x.N;
+        if (x == null)
+        {
+        	return 0;
+        }
+        else
+        {
+        	return x.N;
+       	}
     }
     
     /**
@@ -44,16 +48,34 @@ public class BST<Key extends Comparable<Key>, Value> {
      */
     public Value get(Key key) { 
     	
-    	if(key == null) return null;
-    	else return get(root, key); 
+    	if(key == null)
+    	{
+    		return null;
+    	}
+    	else
+    	{	
+    		return get(root, key);
+    	}
     }
 
     private Value get(Node x, Key key) {
-        if (x == null) return null;
+        if (x == null)
+        {
+        	return null;
+       	}
         int cmp = key.compareTo(x.key);
-        if      (cmp < 0) return get(x.left, key);
-        else if (cmp > 0) return get(x.right, key);
-        else              return x.val;
+        if(cmp < 0)
+        {
+        	return get(x.left, key);
+       	}
+        else if(cmp > 0)
+       	{
+        	return get(x.right, key);
+        }
+        else
+        {
+        	return x.val;
+        }
     }
 
     /**
@@ -64,17 +86,36 @@ public class BST<Key extends Comparable<Key>, Value> {
      *  @param val the value associated with key
      */
     public void insert(Key key, Value val) {
-		if (key == null) { return; }
-        if (val == null) { delete(key); return; }
+		if(key == null)
+		{ 
+			return;
+		}
+        if(val == null)
+        {
+        	delete(key); 
+        	return; 
+        }
         root = insert(root, key, val);
     }
 
     private Node insert(Node x, Key key, Value val) {
-        if (x == null) return new Node(key, val, 1);
+        if(x == null)
+        {
+        	return new Node(key, val, 1);
+       	}
         int cmp = key.compareTo(x.key);
-        if      (cmp < 0) x.left  = insert(x.left,  key, val);
-        else if (cmp > 0) x.right = insert(x.right, key, val);
-        else              x.val   = val;
+        if(cmp < 0)
+        {
+        	x.left  = insert(x.left,  key, val);
+        }
+        else if(cmp > 0) 
+        {
+        	x.right = insert(x.right, key, val);
+       	}
+        else
+        {
+        	x.val   = val;
+       	}
         x.N = 1 + size(x.left) + size(x.right);
         return x;
     }
@@ -101,7 +142,10 @@ public class BST<Key extends Comparable<Key>, Value> {
      * @return a String with all keys in the tree, in order, parenthesised.
      */
     public String printTree() {
-      if (isEmpty()) return "()";
+      if(isEmpty())
+      {
+    	  return "()";
+      }
       
       StringBuilder output = new StringBuilder();
       output.append("(");
@@ -128,18 +172,36 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
     
     public void delete(Key key) {
-    	if(key!=null) root = delete(root, key);
+    	if(key!=null)
+    	{
+    		root = delete(root, key);
+    	}
     }
     
     private Node delete(Node x, Key key){
-    	if(x == null) return null;
+    	if(x == null)
+    	{
+    		return null;
+    	}
     	int cmp = key.compareTo(x.key);
-    	if		(cmp < 0) x.left  = delete(x.left, key);	//Search for key
-    	else if	(cmp > 0) x.right = delete(x.right, key);
+    	if(cmp < 0)
+    	{
+    		x.left  = delete(x.left, key);
+    	}
+    	else if(cmp > 0)
+    	{
+    		x.right = delete(x.right, key);
+    	}
     	else
     	{
-    		if(x.right 	== null) return x.left;				//No right child
-    		if(x.left 	== null) return x.right;			//No left child
+    		if(x.right 	== null)
+    		{
+    			return x.left;				
+    		}
+    		if(x.left 	== null)
+    		{
+    			return x.right;
+    		}
     		
     		Node t = x;
     		x = t.left;
@@ -154,45 +216,92 @@ public class BST<Key extends Comparable<Key>, Value> {
     	return x;
     }
     
-    /*Deletes the maximum key from a BST rooted at a given node*/    
     private Node deleteMax(Node x)
     {
-    	if(x.right == null) return x.left;
+    	if(x.right == null)
+    	{
+    		return x.left;
+    	}
     	x.right = deleteMax(x.right);
     	x.N = 1 + size(x.left) + size(x.right);
     	return x;
     }
 
-    //Small function to determine if a key is present in the tree.
     public boolean contains(Key x){
     	return(get(x)!=null);
     }
     
     
     
-    public Key lowestCommonAncestor(Key i, Key j) {
-    	if (root == null){
-			return null;			//If tree is empty return null.
+    public Key lowestCommonAncestor(Key node1, Key node2) {
+    	if (root == null)
+    	{
+			return null;			
 		}
-    	if(!contains(i) || !contains(j)){
+    	if(contains(node1)==false || contains(node2)==false)
+    	{
     		return null;
     	}
-    	return lowestCommonAncestor(root, i, j);
+    	return lowestCommonAncestor(root, node1, node2);
     }
     
-	private Key lowestCommonAncestor(Node x, Key i, Key j) {
+	private Key lowestCommonAncestor(Node currentNode, Key node1, Key node2)
+	{
+		//compares key to see if it is too far or needs to keep going
+		//this can be repurposed for assignment 2
+		//use cmp to decide when to head back and whether to go into each child
+		int cmp1 = currentNode.key.compareTo(node1);
+		int cmp2 = currentNode.key.compareTo(node2);
 		
-		int cmpI = x.key.compareTo(i);
-		int cmpJ = x.key.compareTo(j);
-		
-		if(cmpI > 0 && cmpJ > 0){
-			return lowestCommonAncestor(x.left, i, j);
+		if(cmp1 > 0 && cmp2 > 0)
+		{
+			return lowestCommonAncestor(currentNode.left, node1, node2);
 		}
-		else if(cmpI < 0 && cmpJ < 0){
-			return lowestCommonAncestor(x.right, i, j);
+		else if(cmp1 < 0 && cmp2 < 0)
+		{
+			return lowestCommonAncestor(currentNode.right, node1, node2);
 		}
 		else{
-			return x.key;
+			return currentNode.key;
 		}	
 	}
+	//non working
+	//kinda working
+	/*
+	public static Node lowestCommonAncestor(Node rootNode, Node node1, Node node2) 
+	{
+	    if(rootNode == null)
+	    {
+	        return null;
+	    }
+	 
+	    if(rootNode == node1 || rootNode == node2)
+	    {
+	        return rootNode;
+	    }
+	 
+	    Node left = rootNode.left;
+	    Node right = rootNode.right;
+	    Node leftNode = lowestCommonAncestor(left, node1, node2);
+	    Node rightNode = lowestCommonAncestor(right, node1, node2);
+	 
+	    if(leftNode != null && rightNode != null)
+	    {
+	        return rootNode;
+	    }
+	    else if(leftNode == null && rightNode == null)
+	    {
+	        return null;
+	    }
+	    if(leftNode == null)
+	    {
+	        return rightNode;
+	    }
+	    else
+	    {
+	    	return leftNode;
+	    }
+	}
+	*/
+
 }
