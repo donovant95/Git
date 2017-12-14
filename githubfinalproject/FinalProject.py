@@ -1,7 +1,7 @@
 import requests
 import json
 import sys 
-import numpy as np
+import numpy
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
